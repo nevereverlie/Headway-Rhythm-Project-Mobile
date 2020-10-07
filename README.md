@@ -1,2 +1,2 @@
 # Headway-Rhythm-Project-Mobile
-Mobile part of HRP audio app built with Kotlin
+Mobile part of HRP audio app built with Kotlin using Android SDK.
