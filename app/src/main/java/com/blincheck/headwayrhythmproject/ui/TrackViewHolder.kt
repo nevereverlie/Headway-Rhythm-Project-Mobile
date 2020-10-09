@@ -13,7 +13,7 @@ class TrackViewHolder(view: View, itemClickListener: (Track) -> Unit) :
     }
 
     override fun setContent(data: Track) {
-        itemView.nameTextView.text = data.name;
-        itemView.artistTextView.text = data.artist;
+        itemView.nameTextView.text = data.trackName;
+        itemView.artistTextView.text = data.performerName;
     }
 }
