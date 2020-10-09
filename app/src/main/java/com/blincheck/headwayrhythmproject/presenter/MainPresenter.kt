@@ -6,7 +6,6 @@ import com.blincheck.headwayrhythmproject.repository.TrackRepository
 import com.blincheck.headwayrhythmproject.ui.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlin.math.log
 
 class MainPresenter : BasePresenter<MainActivity>() {
 
