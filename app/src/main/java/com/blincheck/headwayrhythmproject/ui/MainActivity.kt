@@ -5,8 +5,9 @@ import android.view.View
 import com.blincheck.headwayrhythmproject.R
 import com.blincheck.headwayrhythmproject.enity.Track
 import com.blincheck.headwayrhythmproject.presenter.MainPresenter
+import com.blincheck.headwayrhythmproject.repository.WebService
 import com.blincheck.headwayrhythmproject.ui.base.BaseActivity
-import com.blincheck.headwayrhythmproject.util.MediaManager
+import com.blincheck.headwayrhythmproject.util.PlayListManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainActivity, MainPresenter>() {
@@ -17,7 +18,7 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>() {
 
     private val adapter = TrackListAdapter(::onItemClicked)
 
-    private val player = MediaManager()
+    private val playListManager = PlayListManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +28,11 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>() {
 
     private fun initRecyclerView() {
         track_list.adapter = adapter
-        presenter.loadTracks()
+        presenter.loadTracks(playListManager)
     }
 
     private fun initMediaManager() {
-        player.setMainActivity(this)
+        playListManager.setMainActivity(this)
     }
 
     fun showTracks(tracks: List<Track>) {
@@ -39,18 +40,18 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>() {
     }
 
     private fun onItemClicked(data: Track) {
-        player.start(data.url)
+        playListManager.start(data)
     }
 
     fun playBtnClick(view: View) {
-        player.playBtnClick()
+        playListManager.startOrPause()
     }
 
     fun prevTrackBtnClick(view: View) {
-        player.prevTrackBtnClick()
+        playListManager.prevTrackBtnClick()
     }
 
     fun nextTrackBtnClick(view: View) {
-        player.nextTrackBtnClick()
+        playListManager.nextTrackBtnClick()
     }
 }

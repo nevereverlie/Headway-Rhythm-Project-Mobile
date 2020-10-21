@@ -8,6 +8,7 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Message
 import android.widget.SeekBar
+import com.blincheck.headwayrhythmproject.enity.Track
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MediaManager {
@@ -20,11 +21,13 @@ class MediaManager {
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
 
-    fun start(trackUrl:String){
+    fun start(track: Track){
         mp.reset()
 
-        mp.setDataSource(trackUrl)
+        mp.setDataSource(track.url)
         mp.prepareAsync()
+
+        activity?.trackNameLabel?.text = track.trackName
     }
 
     fun pause(){
@@ -112,7 +115,7 @@ class MediaManager {
         return timeLabel
     }
 
-    fun playBtnClick() {
+    fun startOrPause() {
         if (mp.isPlaying) {
             mp.pause()
 
@@ -121,9 +124,7 @@ class MediaManager {
         }
     }
 
-    fun prevTrackBtnClick() {
-    }
-
-    fun nextTrackBtnClick() {
+    fun isPlaying(): Boolean {
+        return mp.isPlaying
     }
 }
