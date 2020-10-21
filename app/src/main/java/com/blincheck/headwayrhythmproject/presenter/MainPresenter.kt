@@ -8,13 +8,13 @@ import com.blincheck.headwayrhythmproject.util.PlayListManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class MainPresenter : BasePresenter<MainActivity>() {
+class MainPresenter(private var playListManager: PlayListManager) : BasePresenter<MainActivity>() {
 
     private val trackRepository = TrackRepository()
-    private lateinit var playListManager: PlayListManager
 
-    fun loadTracks(playListManager: PlayListManager) {
-        this.playListManager = playListManager
+    private var searchString = ""
+
+    fun loadTracks() {
         trackRepository
             .getAllTracks()
             .subscribeOn(Schedulers.io())
@@ -23,8 +23,23 @@ class MainPresenter : BasePresenter<MainActivity>() {
     }
 
     private fun onTracksLoaded(tracks: List<Track>) {
-        view?.showTracks(tracks)
-        playListManager.setPlayList(tracks)
+        val filteredTracks = if (searchString.isEmpty()) tracks else filterTracks(tracks)
+        view?.showTracks(filteredTracks)
+        playListManager.setPlayList(filteredTracks)
+    }
+
+    private fun filterTracks(tracks: List<Track>): List<Track> {
+        return tracks.filter {
+            it.trackName?.contains(searchString, true) ?: false ||
+                    it.performerName?.contains(searchString, true) ?: false
+        }
+    }
+
+    fun onSearchStringChanged(newSearchString: String?) {
+        if (newSearchString != null) {
+            searchString = newSearchString
+            loadTracks()
+        }
     }
 
     private fun onError(error: Throwable) {

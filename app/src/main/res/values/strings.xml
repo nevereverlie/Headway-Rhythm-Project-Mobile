@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HeadwayRhythmProject</string>
+    <string name="search_tracks">Search tracks</string>
 </resources>
