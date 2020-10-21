@@ -1,18 +1,17 @@
 package com.blincheck.headwayrhythmproject.ui
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
+import android.widget.SearchView
 import com.blincheck.headwayrhythmproject.R
 import com.blincheck.headwayrhythmproject.enity.Track
 import com.blincheck.headwayrhythmproject.presenter.MainPresenter
-import com.blincheck.headwayrhythmproject.repository.WebService
 import com.blincheck.headwayrhythmproject.ui.base.BaseActivity
 import com.blincheck.headwayrhythmproject.util.PlayListManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainActivity, MainPresenter>() {
-
-    override val presenter = MainPresenter()
 
     override val layoutResId = R.layout.activity_main
 
@@ -20,15 +19,34 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>() {
 
     private val playListManager = PlayListManager()
 
+    override val presenter = MainPresenter(playListManager)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initRecyclerView()
         initMediaManager()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                presenter.onSearchStringChanged(newText)
+                return false
+            }
+        })
+        return true
+    }
+
     private fun initRecyclerView() {
         track_list.adapter = adapter
-        presenter.loadTracks(playListManager)
+        presenter.loadTracks()
     }
 
     private fun initMediaManager() {
