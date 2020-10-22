@@ -1,5 +1,6 @@
 package com.blincheck.headwayrhythmproject.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -23,6 +24,11 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        profileImage.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
         initRecyclerView()
         initMediaManager()
     }
@@ -42,6 +48,11 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>() {
             }
         })
         return true
+    }
+
+    override fun onStop() {
+        playListManager.pause()
+        super.onStop()
     }
 
     private fun initRecyclerView() {
