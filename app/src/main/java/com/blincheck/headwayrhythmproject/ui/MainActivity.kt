@@ -102,5 +102,6 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(), FilterDialog.F
                         "endYear" to dialog.dialogView.endDate?.text.toString(),
                         "genres" to dialog.dialogView.genres?.text.toString())
         presenter.onFilterMapChanged(map)
+        d.setFilterMap(map)
     }
 }
