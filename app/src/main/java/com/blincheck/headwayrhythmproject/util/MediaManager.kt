@@ -31,7 +31,9 @@ class MediaManager {
     }
 
     fun pause(){
-        mp.pause()
+        if (mp.isPlaying) {
+            mp.pause()
+        }
     }
 
     fun resume(){

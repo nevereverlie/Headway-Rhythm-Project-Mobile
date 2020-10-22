@@ -55,10 +55,10 @@
         android:text="Home"
         android:textColor="#A1F4F3F3"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/homeImage"
         app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintStart_toStartOf="@+id/homeImage"
+        app:layout_constraintTop_toBottomOf="@+id/homeImage" />
 
     <TextView
         android:id="@+id/textView3"
@@ -81,13 +81,13 @@
         android:text="Profile"
         android:textColor="#A1F4F3F3"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintEnd_toEndOf="@+id/profileImage"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="@+id/profileImage"
+        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/homeImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
@@ -97,12 +97,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/profileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
         android:src="@drawable/profile_icon"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -112,8 +114,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/album_icon"
-        app:layout_constraintEnd_toStartOf="@+id/imageView6"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintEnd_toStartOf="@+id/profileImage"
+        app:layout_constraintStart_toEndOf="@+id/homeImage"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <androidx.recyclerview.widget.RecyclerView
