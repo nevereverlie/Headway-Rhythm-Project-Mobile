@@ -8,6 +8,6 @@ data class Track (
     @SerializedName("performerName") var performerName: String?,
     @SerializedName("url") var url: String,
     @SerializedName("publicId") var publicId: String,
-    @SerializedName("dateAdded") var dateAdded: String,
+    @SerializedName("trackYear") var dateAdded: Int,
     @SerializedName("genres") var genres: String?
 )

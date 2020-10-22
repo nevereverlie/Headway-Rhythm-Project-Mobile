@@ -107,7 +107,7 @@
 
     <Button
         android:id="@+id/submitButton"
-        android:layout_width="113dp"
+        android:layout_width="125dp"
         android:layout_height="55dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="#5F09B6"

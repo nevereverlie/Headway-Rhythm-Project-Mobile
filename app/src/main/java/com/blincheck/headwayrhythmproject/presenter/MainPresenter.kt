@@ -13,6 +13,7 @@ class MainPresenter(private var playListManager: PlayListManager) : BasePresente
     private val trackRepository = TrackRepository()
 
     private var searchString = ""
+    private var filterMap : Map<String, String>? = null
 
     fun loadTracks() {
         trackRepository
@@ -23,7 +24,17 @@ class MainPresenter(private var playListManager: PlayListManager) : BasePresente
     }
 
     private fun onTracksLoaded(tracks: List<Track>) {
-        val filteredTracks = if (searchString.isEmpty()) tracks else filterTracks(tracks)
+        val filteredTracks: List<Track>
+        if (!searchString.isEmpty())
+            filteredTracks = filterTracks(tracks)
+        else if (filterMap != null) {
+            filteredTracks = filterTracksPoBolshe(tracks)
+            filterMap = null
+        }
+        else {
+            filteredTracks = tracks
+        }
+
         view?.showTracks(filteredTracks)
         playListManager.setPlayList(filteredTracks)
     }
@@ -35,10 +46,38 @@ class MainPresenter(private var playListManager: PlayListManager) : BasePresente
         }
     }
 
+    private fun filterTracksPoBolshe(tracks: List<Track>): List<Track> {
+        return tracks.filter {
+            var result = true
+
+            if (filterMap!!["name"].toString() != "")
+                result = result && it.trackName?.contains(    filterMap!!["name"].toString(), true) ?: false
+
+            if (filterMap!!["author"].toString() != "")
+                result = result && it.performerName?.contains(    filterMap!!["author"].toString(), true) ?: false
+
+            if (filterMap!!["startYear"].toString() != "")
+                result = result && it.dateAdded > filterMap!!["startYear"]?.toInt() ?: Int.MAX_VALUE
+
+            if (filterMap!!["endYear"].toString() != "")
+                result = result && it.dateAdded < filterMap!!["endYear"]?.toInt() ?: Int.MIN_VALUE
+
+            //if (filterMap!!["genres"].toString() != "")
+            //    result = result && true
+
+            result
+        }
+    }
+
     fun onSearchStringChanged(newSearchString: String?) {
         if (newSearchString != null) {
             searchString = newSearchString
             loadTracks()
         }
+    }
+
+    fun onFilterMapChanged(newFilterMap: Map<String, String>) {
+            filterMap = newFilterMap
+            loadTracks()
     }
 }
