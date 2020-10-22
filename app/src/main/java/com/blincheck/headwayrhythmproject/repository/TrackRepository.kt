@@ -7,7 +7,5 @@ class TrackRepository {
 
     private val webService = WebService.getWebService()
 
-    fun getAllTracks(): Single<List<Track>> {
-        return webService.getAllTracks()
-    }
+    fun getAllTracks() = webService.getAllTracks()
 }
