@@ -82,8 +82,4 @@ class MainPresenter(private var playListManager: PlayListManager) : BasePresente
             filterMap = newFilterMap
             loadTracks()
     }
-
-    private fun onError(error: Throwable) {
-        Log.d("FNP", "Error: $error")
-    }
 }

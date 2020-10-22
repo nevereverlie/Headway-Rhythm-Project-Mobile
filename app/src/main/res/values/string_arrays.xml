@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="photo_selection_methods">
+        <item>@string/selection_method_from_gallery</item>
+    </string-array>
+</resources>

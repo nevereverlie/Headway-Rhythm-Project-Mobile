@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">HeadwayRhythmProject</string>
     <string name="search_tracks">Search tracks</string>
+
+    <string name="title_photo_selection_method_dialog">Select method to set profile photo</string>
+    <string name="selection_method_from_gallery">Choose photo from Gallery</string>
+    <string name="selection_method_from_camera">Take a photo</string>
 </resources>

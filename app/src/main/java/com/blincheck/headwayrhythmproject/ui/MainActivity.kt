@@ -33,6 +33,11 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(), FilterDialog.F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        profileImage.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
         initRecyclerView()
         initMediaManager()
     }
@@ -62,6 +67,11 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(), FilterDialog.F
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStop() {
+        playListManager.pause()
+        super.onStop()
     }
 
     private fun initRecyclerView() {

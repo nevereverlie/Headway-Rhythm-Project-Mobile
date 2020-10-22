@@ -47,6 +47,10 @@ class PlayListManager {
         player.startOrPause()
     }
 
+    fun pause() {
+        player.pause()
+    }
+
     fun prevTrackBtnClick() {
         if (this.playlist?.size!! > 0) {
             trackIndex = (trackIndex - 1) % playlist!!.size
