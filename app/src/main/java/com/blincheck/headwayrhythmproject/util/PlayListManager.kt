@@ -9,7 +9,14 @@ class PlayListManager {
     private var trackIndex: Int = -1
 
     fun start(track: Track){
-        player.start(track)
+        if (playlist != null) {
+            for (i in 1..playlist?.size!!) {
+                if (playlist!![i - 1].trackId == track.trackId) {
+                    start(i - 1)
+                    return
+                }
+            }
+        }
     }
 
     fun start(trackIndex: Int) {
@@ -29,7 +36,7 @@ class PlayListManager {
     fun setPlayList(playlist: List<Track>) {
         player.pause()
         this.playlist = playlist
-        start()
+        this.trackIndex = 0
     }
 
     fun setMainActivity(mainActivity: MainActivity) {
