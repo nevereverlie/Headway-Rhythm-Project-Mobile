@@ -28,12 +28,10 @@ class MainPresenter(private var playListManager: PlayListManager) : BasePresente
         if (!searchString.isEmpty())
             filteredTracks = filterTracks(tracks)
         else if (filterMap != null) {
-            Log.d("OLEG", "Begin")
             filteredTracks = filterTracksPoBolshe(tracks)
             filterMap = null
         }
         else {
-            Log.d("OLEG", "Idc,fu")
             filteredTracks = tracks
         }
 
@@ -59,13 +57,13 @@ class MainPresenter(private var playListManager: PlayListManager) : BasePresente
                 result = result && it.performerName?.contains(    filterMap!!["author"].toString(), true) ?: false
 
             if (filterMap!!["startYear"].toString() != "")
-                result = result && it.dateAdded.toInt() > filterMap!!["startYear"]?.toInt() ?: Int.MAX_VALUE
+                result = result && it.dateAdded > filterMap!!["startYear"]?.toInt() ?: Int.MAX_VALUE
 
             if (filterMap!!["endYear"].toString() != "")
-                result = result && it.dateAdded.toInt() < filterMap!!["endYear"]?.toInt() ?: Int.MIN_VALUE
+                result = result && it.dateAdded < filterMap!!["endYear"]?.toInt() ?: Int.MIN_VALUE
 
-            if (filterMap!!["genres"].toString() != "")
-                result = result && true
+            //if (filterMap!!["genres"].toString() != "")
+            //    result = result && true
 
             result
         }
