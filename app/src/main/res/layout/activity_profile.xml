@@ -109,12 +109,27 @@
         android:id="@+id/submitButton"
         android:layout_width="125dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="36dp"
         android:backgroundTint="#5F09B6"
         android:text="Submit"
         android:textColor="#CFCECE"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="125dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="36dp"
+        android:backgroundTint="#5F09B6"
+        android:text="Log out"
+        android:textColor="#CFCECE"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.807"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

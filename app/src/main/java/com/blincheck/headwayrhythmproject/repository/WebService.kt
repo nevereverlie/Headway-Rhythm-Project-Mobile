@@ -1,7 +1,10 @@
 package com.blincheck.headwayrhythmproject.repository
 
+import com.blincheck.headwayrhythmproject.enity.LoginRequest
+import com.blincheck.headwayrhythmproject.enity.LoginResponse
 import com.blincheck.headwayrhythmproject.enity.Track
 import com.blincheck.headwayrhythmproject.enity.User
+import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,13 +22,21 @@ interface WebService {
     fun getUser(): Single<List<User>>
 
     @Multipart
-    @POST("User/update")
+    @PUT("User/update")
     fun updateUser(
         @Part("userId") userId: Int,
         @Part("Username") userName: RequestBody,
         @Part("Description") description: RequestBody,
         @Part filePart: MultipartBody.Part? = null
     ): Single<User>
+
+    @Headers("Content-Type: application/json")
+    @POST("Auth/login")
+    fun loginUser(@Body requestBody: LoginRequest): Single<LoginResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST("Auth/register")
+    fun registerUser(@Body requestBody: LoginRequest): Completable
 
     companion object {
 

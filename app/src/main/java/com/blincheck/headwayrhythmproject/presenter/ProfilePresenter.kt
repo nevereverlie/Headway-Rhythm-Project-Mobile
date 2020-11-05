@@ -10,7 +10,6 @@ import com.blincheck.headwayrhythmproject.ui.ProfileActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-
 class ProfilePresenter : BasePresenter<ProfileActivity>() {
 
     private val userRepository = UserRepository()
@@ -19,7 +18,11 @@ class ProfilePresenter : BasePresenter<ProfileActivity>() {
 
     private lateinit var currentUser: User
 
-    fun loadUserData() {
+    private var currentUserId: Int = -1
+
+    fun loadUserData(id: Int) {
+        currentUserId = id
+
         userRepository
             .getUser()
             .subscribeOn(Schedulers.io())
@@ -28,7 +31,7 @@ class ProfilePresenter : BasePresenter<ProfileActivity>() {
     }
 
     private fun onUsersLoaded(users: List<User>) {
-        onUserLoaded(users.first())
+        onUserLoaded(users.first { it.userId == currentUserId })
     }
 
     fun onSubmitClicked(newUserName: String) {
@@ -40,6 +43,7 @@ class ProfilePresenter : BasePresenter<ProfileActivity>() {
     }
 
     private fun onUserLoaded(user: User) {
+        Log.d("FNP", "User loaded: name: ${user.userName}, photo: ${user.photoUrl}")
         currentUser = user.copy(
             userName = user.userName?.replace("\"", ""),
             description = user.description?.replace("\"", "")
