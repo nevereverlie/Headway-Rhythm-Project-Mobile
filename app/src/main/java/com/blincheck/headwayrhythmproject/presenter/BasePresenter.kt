@@ -22,7 +22,7 @@ abstract class BasePresenter<V : BaseView>() {
         view = null
     }
 
-    fun onError(error: Throwable) {
+    open fun onError(error: Throwable) {
         Log.d("FNP", "Error: $error")
     }
 }

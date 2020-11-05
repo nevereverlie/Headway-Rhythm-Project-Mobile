@@ -2,15 +2,16 @@ package com.blincheck.headwayrhythmproject.ui
 
 import android.app.Activity
 import android.content.ClipData
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.TextView
-import com.blincheck.headwayrhythmproject.presenter.ProfilePresenter
-import com.blincheck.headwayrhythmproject.ui.base.BaseActivity
 import com.blincheck.headwayrhythmproject.R
 import com.blincheck.headwayrhythmproject.enity.User
+import com.blincheck.headwayrhythmproject.presenter.ProfilePresenter
+import com.blincheck.headwayrhythmproject.ui.base.BaseActivity
 import com.blincheck.headwayrhythmproject.util.FileManager
 import com.blincheck.headwayrhythmproject.util.MimeType
 import com.bumptech.glide.Glide
@@ -43,11 +44,28 @@ class ProfileActivity : BaseActivity<ProfileActivity, ProfilePresenter>() {
             presenter.onSubmitClicked(editTextName.text.toString())
         }
 
+        logoutButton.setOnClickListener {
+            val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+            with (sharedPref.edit()) {
+                putInt("userId", -1)
+                apply()
+            }
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
         homeImage.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        presenter.loadUserData()
+        presenter.loadUserData(
+            getSharedPreferences(
+                "myPrefs",
+                Context.MODE_PRIVATE
+            ).getInt("userId", -1)
+        )
     }
 
     fun showUserInfo(user: User) {
