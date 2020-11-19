@@ -1,7 +1,9 @@
 package com.blincheck.headwayrhythmproject.util
 
+import androidx.appcompat.app.AppCompatActivity
 import com.blincheck.headwayrhythmproject.ui.MainActivity
 import com.blincheck.headwayrhythmproject.enity.Track
+import com.blincheck.headwayrhythmproject.ui.base.BaseActivity
 
 class PlayListManager {
     private val player = MediaManager()
@@ -39,7 +41,7 @@ class PlayListManager {
         this.trackIndex = 0
     }
 
-    fun setMainActivity(mainActivity: MainActivity) {
+    fun setMainActivity(mainActivity: AppCompatActivity) {
         player.setMainActivity(mainActivity)
     }
 

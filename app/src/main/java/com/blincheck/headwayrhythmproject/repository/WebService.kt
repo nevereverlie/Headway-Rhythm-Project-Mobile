@@ -35,6 +35,13 @@ interface WebService {
         @Path("userId") userId: Int
     ): Single<List<Playlist>>
 
+    @GET("Playlists/get-tracks-of-playlist/{userId}/{playlistId}")
+    fun getPlaylistTracks(
+        @Header("authorization") token: String,
+        @Path("userId") userId: Int,
+        @Path("playlistId") playlistId: Int
+    ): Single<List<Track>>
+
     @POST("Playlists/add-playlist-for-user/{userId}")
     fun createPlaylist(
         @Header("authorization") token: String,

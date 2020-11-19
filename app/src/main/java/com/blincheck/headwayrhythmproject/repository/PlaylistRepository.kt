@@ -10,4 +10,7 @@ class PlaylistRepository {
 
     fun createPlaylist(userId: Int, playlistName: String) =
         webService.createPlaylist(WebService.token, userId, CreatePlaylistBody(playlistName))
+
+    fun getPlaylistTracks(userId: Int, playlistId: Int) =
+        webService.getPlaylistTracks(WebService.token, userId, playlistId)
 }
