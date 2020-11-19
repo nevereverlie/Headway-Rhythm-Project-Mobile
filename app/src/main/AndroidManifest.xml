@@ -30,6 +30,8 @@
 
         <activity android:name=".ui.ProfileActivity" />
 
+        <activity android:name=".ui.PlaylistActivity" />
+
         <activity android:name=".ui.PlaylistsActivity" />
 
         <provider

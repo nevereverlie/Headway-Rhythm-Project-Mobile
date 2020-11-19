@@ -63,7 +63,10 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(), FilterDialog.F
             "myPrefs",
             Context.MODE_PRIVATE
         ).getString("token", "").toString()
+    }
 
+    override fun onResume() {
+        super.onResume()
         loadLists(getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getInt("userId", -1))
     }
 
