@@ -20,7 +20,7 @@ class UserRepository {
     fun registerUser(username: String, password: String) =
         webService.registerUser(LoginRequest(username, password))
 
-    fun getUser(): Single<List<User>> = webService.getUser()
+    fun getUser(): Single<List<User>> = webService.getUser(WebService.token)
 
     fun updateUser(user: User, photoUri: Uri?): Single<User> {
         val file = if (photoUri == null) null else File(photoUri.path!!)
@@ -36,6 +36,7 @@ class UserRepository {
             RequestBody.create("text/plain".toMediaTypeOrNull(), user.description ?: "")
 
         return webService.updateUser(
+            WebService.token,
             user.userId,
             userName,
             description,

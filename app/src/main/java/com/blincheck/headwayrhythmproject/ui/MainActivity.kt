@@ -1,5 +1,6 @@
 package com.blincheck.headwayrhythmproject.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,13 +14,15 @@ import androidx.fragment.app.DialogFragment
 import com.blincheck.headwayrhythmproject.R
 import com.blincheck.headwayrhythmproject.enity.Track
 import com.blincheck.headwayrhythmproject.presenter.MainPresenter
+import com.blincheck.headwayrhythmproject.repository.WebService
 import com.blincheck.headwayrhythmproject.ui.base.BaseActivity
 import com.blincheck.headwayrhythmproject.util.PlayListManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.filter_dialog.view.*
 
 
-class MainActivity : BaseActivity<MainActivity, MainPresenter>(), FilterDialog.FilterDialogListener {
+class MainActivity : BaseActivity<MainActivity, MainPresenter>(),
+    FilterDialog.FilterDialogListener {
 
     override val layoutResId = R.layout.activity_main
 
@@ -38,8 +41,19 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(), FilterDialog.F
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+
+        libraryImage.setOnClickListener {
+            val intent = Intent(this, PlaylistsActivity::class.java)
+            startActivity(intent)
+        }
+
         initRecyclerView()
         initMediaManager()
+
+        WebService.token = getSharedPreferences(
+            "myPrefs",
+            Context.MODE_PRIVATE
+        ).getString("token", "").toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -106,11 +120,13 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(), FilterDialog.F
     override fun onDialogPositiveClick(dialog: DialogFragment?) {
         dialog as FilterDialog
 
-        val map: Map<String, String> = mapOf("name" to dialog.dialogView.trackName?.text.toString(),
-                        "author" to dialog.dialogView.trackAuthor?.text.toString(),
-                        "startYear" to dialog.dialogView.startDate?.text.toString(),
-                        "endYear" to dialog.dialogView.endDate?.text.toString(),
-                        "genres" to dialog.dialogView.genres?.text.toString())
+        val map: Map<String, String> = mapOf(
+            "name" to dialog.dialogView.trackName?.text.toString(),
+            "author" to dialog.dialogView.trackAuthor?.text.toString(),
+            "startYear" to dialog.dialogView.startDate?.text.toString(),
+            "endYear" to dialog.dialogView.endDate?.text.toString(),
+            "genres" to dialog.dialogView.genres?.text.toString()
+        )
         presenter.onFilterMapChanged(map)
         d.setFilterMap(map)
     }

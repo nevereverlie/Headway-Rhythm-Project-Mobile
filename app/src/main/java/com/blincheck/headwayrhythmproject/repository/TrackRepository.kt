@@ -7,5 +7,5 @@ class TrackRepository {
 
     private val webService = WebService.getWebService()
 
-    fun getAllTracks() = webService.getAllTracks()
+    fun getAllTracks() = webService.getAllTracks(WebService.token)
 }

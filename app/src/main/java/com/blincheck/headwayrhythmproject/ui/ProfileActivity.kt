@@ -34,6 +34,11 @@ class ProfileActivity : BaseActivity<ProfileActivity, ProfilePresenter>() {
 
         profileImageView.setOnClickListener { onSetProfilePhotoClicked() }
 
+        libraryImageView.setOnClickListener {
+            val intent = Intent(this, PlaylistsActivity::class.java)
+            startActivity(intent)
+        }
+
         photoSelectionDialog =
             PhotoSelectionFragmentDialog(
                 ::openGallery,
@@ -46,7 +51,7 @@ class ProfileActivity : BaseActivity<ProfileActivity, ProfilePresenter>() {
 
         logoutButton.setOnClickListener {
             val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-            with (sharedPref.edit()) {
+            with(sharedPref.edit()) {
                 putInt("userId", -1)
                 apply()
             }
