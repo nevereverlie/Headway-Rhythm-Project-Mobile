@@ -18,6 +18,14 @@ interface WebService {
     @GET("Tracks")
     fun getAllTracks(@Header("authorization") token: String): Single<List<Track>>
 
+    @Headers("Content-Type: application/json")
+    @POST("Playlists/add-track-to-playlist/{userId}")
+    fun addTrackToPlaylist(
+        @Path("userId") userId: Int,
+        @Header("authorization") token: String,
+        @Body addToPlayListRequestBody: AddToPlayListRequestBody
+    ): Completable
+
     @GET("User")
     fun getUser(@Header("authorization") token: String): Single<List<User>>
 

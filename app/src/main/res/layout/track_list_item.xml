@@ -16,23 +16,34 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/donload_icon" />
 
+    <ImageView
+        android:id="@+id/addView"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/add" />
+
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="36dp"
         android:text="Some song name"
         android:textColor="#A1F4F3F3"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.458" />
 
     <TextView
         android:id="@+id/artistTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="8dp"
         android:text="Artist name"
         android:textColor="#A1F4F3F3"
         android:textSize="18sp"
@@ -45,12 +56,12 @@
         android:id="@+id/dashTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="4dp"
         android:text="-"
         android:textColor="#A1F4F3F3"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/nameTextView"
         app:layout_constraintStart_toEndOf="@+id/nameTextView"
         app:layout_constraintTop_toTopOf="@+id/nameTextView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

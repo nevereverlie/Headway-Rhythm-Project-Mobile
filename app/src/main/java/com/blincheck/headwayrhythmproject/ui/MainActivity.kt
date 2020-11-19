@@ -12,27 +12,36 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.blincheck.headwayrhythmproject.R
+import com.blincheck.headwayrhythmproject.enity.AddToPlayListRequestBody
+import com.blincheck.headwayrhythmproject.enity.Playlist
 import com.blincheck.headwayrhythmproject.enity.Track
 import com.blincheck.headwayrhythmproject.presenter.MainPresenter
+import com.blincheck.headwayrhythmproject.presenter.ProfilePresenter
+import com.blincheck.headwayrhythmproject.repository.PlaylistRepository
 import com.blincheck.headwayrhythmproject.repository.WebService
 import com.blincheck.headwayrhythmproject.ui.base.BaseActivity
 import com.blincheck.headwayrhythmproject.util.PlayListManager
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.add_to_playlist_dialog.view.*
 import kotlinx.android.synthetic.main.filter_dialog.view.*
 
-
-class MainActivity : BaseActivity<MainActivity, MainPresenter>(),
-    FilterDialog.FilterDialogListener {
+class MainActivity : BaseActivity<MainActivity, MainPresenter>(), FilterDialog.FilterDialogListener,
+    AddToPlaylistDialog.AddToPlaylistDialogListener {
 
     override val layoutResId = R.layout.activity_main
 
-    private val adapter = TrackListAdapter(::onItemClicked)
+    private val adapter = TrackListAdapter(::onItemClicked, ::onAddToPlaylistClicked)
+
+    private val webService = WebService.getWebService()
 
     private val playListManager = PlayListManager()
 
     override val presenter = MainPresenter(playListManager)
 
     var d = FilterDialog()
+    var ap = AddToPlaylistDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +50,6 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(),
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
-
         libraryImage.setOnClickListener {
             val intent = Intent(this, PlaylistsActivity::class.java)
             startActivity(intent)
@@ -50,10 +58,13 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(),
         initRecyclerView()
         initMediaManager()
 
+
         WebService.token = getSharedPreferences(
             "myPrefs",
             Context.MODE_PRIVATE
         ).getString("token", "").toString()
+
+        loadLists(getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getInt("userId", -1))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -105,6 +116,11 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(),
         playListManager.start(data)
     }
 
+    private fun onAddToPlaylistClicked(data: Track) {
+        ap.track = data
+        ap.show(supportFragmentManager, "addToPlaylist")
+    }
+
     fun playBtnClick(view: View) {
         playListManager.startOrPause()
     }
@@ -117,7 +133,30 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(),
         playListManager.nextTrackBtnClick()
     }
 
-    override fun onDialogPositiveClick(dialog: DialogFragment?) {
+
+    fun loadLists(userId: Int) {
+        val plRep = PlaylistRepository()
+        plRep.getUserPlaylists(userId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onPlaylistsLoaded, ::onError)
+    }
+
+    fun onError(idk: Throwable) {
+        Log.d("OLEH", "ERROR: " + idk.toString())
+    }
+
+    fun onErrorAddPlaylist(idk: Throwable) {
+        Toast.makeText(this, "This track is already within selected playlist!", Toast.LENGTH_LONG)
+            .show()
+        Log.d("OLEH", "ERROR: " + idk.toString())
+    }
+
+    fun onPlaylistsLoaded(playlists: List<Playlist>) {
+        ap.playlistsR = playlists
+    }
+
+    override fun onDialogPositiveClickFilter(dialog: DialogFragment?) {
         dialog as FilterDialog
 
         val map: Map<String, String> = mapOf(
@@ -129,5 +168,26 @@ class MainActivity : BaseActivity<MainActivity, MainPresenter>(),
         )
         presenter.onFilterMapChanged(map)
         d.setFilterMap(map)
+    }
+
+    override fun onDialogPositiveClickAddToPlaylist(dialog: DialogFragment?) {
+        dialog as AddToPlaylistDialog
+        Log.d(
+            "OLEH", "Token: !" + WebService.token + "!  " + dialog.playlistId.toString() +
+                    "<-- Playlist and TrackId -->" + dialog.track!!.trackId +
+                    " on top of that user id -->" + getSharedPreferences(
+                "myPrefs",
+                Context.MODE_PRIVATE
+            ).getInt("userId", -1)
+        )
+        webService.addTrackToPlaylist(
+            getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getInt("userId", -1),
+            WebService.token,
+            AddToPlayListRequestBody(dialog.track!!.trackId, dialog.playlistId)
+
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, ::onErrorAddPlaylist)
     }
 }
