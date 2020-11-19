@@ -5,11 +5,13 @@ import com.blincheck.headwayrhythmproject.enity.Track
 import com.blincheck.headwayrhythmproject.ui.base.BaseViewAdapter
 import kotlinx.android.synthetic.main.track_list_item.view.*
 
-class TrackViewHolder(view: View, itemClickListener: (Track) -> Unit) :
+class TrackViewHolder(view: View, itemClickListener: (Track) -> Unit,
+                                  itemClickListener2: (Track) -> Unit) :
     BaseViewAdapter.ViewHolder<Track>(view) {
 
     init {
         itemView.setOnClickListener { itemClickListener.invoke(savedData!!) }
+        itemView.addView.setOnClickListener{ itemClickListener2.invoke(savedData!!)}
     }
 
     override fun setContent(data: Track) {

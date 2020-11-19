@@ -32,7 +32,7 @@ class FilterDialog : DialogFragment() {
 
         builder.setView(dialogView).setPositiveButton("Filter"
         ) { dialog, which ->
-            mListener!!.onDialogPositiveClick(this)
+            mListener!!.onDialogPositiveClickFilter(this)
         }
 
         if (filterMap != null)
@@ -53,7 +53,7 @@ class FilterDialog : DialogFragment() {
     }
 
     interface FilterDialogListener {
-        fun onDialogPositiveClick(dialog: DialogFragment?)
+        fun onDialogPositiveClickFilter(dialog: DialogFragment?)
     }
 
     var mListener: FilterDialogListener? = null

@@ -16,7 +16,7 @@ class ProfilePresenter : BasePresenter<ProfileActivity>() {
 
     private val permissionsRepository = PermissionsRepository()
 
-    private lateinit var currentUser: User
+    lateinit var currentUser: User
 
     private var currentUserId: Int = -1
 
