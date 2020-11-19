@@ -33,7 +33,7 @@ class SignUpPresenter : BasePresenter<SignUpActivity>() {
     }
 
     private fun onLoginSuccess(response: LoginResponse) {
-        view?.onSignUpSuccess(response.userId)
+        view?.onSignUpSuccess(response.userId, response.token)
     }
 
     override fun onError(error: Throwable) {

@@ -30,10 +30,11 @@ class SignUpActivity : BaseActivity<SignUpActivity, SignUpPresenter>() {
         Toast.makeText(this, "This user already exists", Toast.LENGTH_LONG).show()
     }
 
-    fun onSignUpSuccess(userId: Int) {
+    fun onSignUpSuccess(userId: Int, token: String) {
         val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
             putInt("userId", userId)
+            putString("token", token)
             apply()
         }
 

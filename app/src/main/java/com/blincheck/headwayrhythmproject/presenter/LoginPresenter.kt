@@ -19,7 +19,7 @@ class LoginPresenter : BasePresenter<LoginActivity>() {
     }
 
     private fun onLoginSuccess(loginResponse: LoginResponse) {
-        view?.onLoginSuccess(loginResponse.userId)
+        view?.onLoginSuccess(loginResponse.userId, loginResponse.token)
     }
 
     override fun onError(error: Throwable) {

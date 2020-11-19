@@ -40,10 +40,11 @@ class LoginActivity : BaseActivity<LoginActivity, LoginPresenter>() {
             .show()
     }
 
-    fun onLoginSuccess(userId: Int) {
+    fun onLoginSuccess(userId: Int, token: String) {
         val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
             putInt("userId", userId)
+            putString("token", token)
             apply()
         }
 
