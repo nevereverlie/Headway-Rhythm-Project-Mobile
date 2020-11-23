@@ -8,6 +8,7 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Message
 import android.widget.SeekBar
+import com.blincheck.headwayrhythmproject.R
 import androidx.appcompat.app.AppCompatActivity
 import com.blincheck.headwayrhythmproject.enity.Track
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,16 +30,19 @@ class MediaManager {
         mp.prepareAsync()
 
         activity?.trackNameLabel?.text = track.trackName
+        activity!!.playBtn.setImageResource(R.drawable.stop)
     }
 
     fun pause(){
         if (mp.isPlaying) {
             mp.pause()
+            activity!!.playBtn.setImageResource(R.drawable.play)
         }
     }
 
     fun resume(){
         mp.start()
+        activity!!.playBtn.setImageResource(R.drawable.stop)
     }
 
     fun setMainActivity(mainActivity: AppCompatActivity) {
@@ -121,9 +125,11 @@ class MediaManager {
     fun startOrPause() {
         if (mp.isPlaying) {
             mp.pause()
+            activity!!.playBtn.setImageResource(R.drawable.play)
 
         } else {
             mp.start()
+            activity!!.playBtn.setImageResource(R.drawable.stop)
         }
     }
 
