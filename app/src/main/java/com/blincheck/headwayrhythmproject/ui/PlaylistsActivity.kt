@@ -3,6 +3,7 @@ package com.blincheck.headwayrhythmproject.ui
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import com.blincheck.headwayrhythmproject.R
@@ -67,6 +68,14 @@ class PlaylistsActivity : BaseActivity<PlaylistsActivity, PlaylistsPresenter>() 
     }
 
     private fun onItemClicked(playlist: Playlist) {
+        val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putInt("playlistId", playlist.playlistId)
+            putString("playlistName", playlist.playlistName)
+            apply()
+        }
 
+        val intent = Intent(this, PlaylistActivity::class.java)
+        startActivity(intent)
     }
 }

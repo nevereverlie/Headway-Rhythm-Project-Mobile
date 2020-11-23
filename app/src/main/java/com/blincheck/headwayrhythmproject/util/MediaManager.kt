@@ -9,13 +9,14 @@ import android.os.Handler
 import android.os.Message
 import android.widget.SeekBar
 import com.blincheck.headwayrhythmproject.R
+import androidx.appcompat.app.AppCompatActivity
 import com.blincheck.headwayrhythmproject.enity.Track
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MediaManager {
     private var mp: MediaPlayer
     private var totalTime: Int = 0
-    private var activity: MainActivity? = null
+    private var activity: AppCompatActivity? = null
 
     init {
         mp = MediaPlayer()
@@ -44,7 +45,7 @@ class MediaManager {
         activity!!.playBtn.setImageResource(R.drawable.stop)
     }
 
-    fun setMainActivity(mainActivity: MainActivity) {
+    fun setMainActivity(mainActivity: AppCompatActivity) {
         if (activity == null) {
             activity = mainActivity
 
