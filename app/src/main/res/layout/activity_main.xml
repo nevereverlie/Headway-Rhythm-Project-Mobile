@@ -201,28 +201,28 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
-            <Button
+            <ImageView
                 android:id="@+id/prevTrackBtn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:backgroundTint="#BBFF0000"
+                android:src="@drawable/prev"
                 android:onClick="prevTrackBtnClick"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/playBtn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
-                android:backgroundTint="#BBFFFF00"
+                android:src="@drawable/play"
                 android:layout_centerInParent="true"
                 android:onClick="playBtnClick"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/nextTrackBtn"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:backgroundTint="#BB00FF00"
+                android:src="@drawable/next"
                 android:onClick="nextTrackBtnClick"/>
         </LinearLayout>
     </LinearLayout>
